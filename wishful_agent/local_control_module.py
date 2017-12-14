@@ -1,3 +1,4 @@
+import socket
 import logging
 import uuid
 import time
@@ -179,3 +180,7 @@ class LocalControlModule(wishful_module.AgentModule):
         for ctrProgId, ctrProg in list(self.controlPrograms.items()):
             ctrProg.stop()
         self.controlPrograms = {}
+
+    @wishful_module.bind_function(upis.mgmt.get_hostname)
+    def get_hostname(self):
+        return socket.gethostname()
