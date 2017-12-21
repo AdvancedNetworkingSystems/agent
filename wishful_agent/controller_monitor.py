@@ -54,9 +54,9 @@ class ControllerMonitor(object):
             [dlink, uplink] = discoveryModule.get_discovered_controller_address()
 
             if dlink and uplink:
-                self.setup_connection_to_controller(dlink,uplink)
                 execTime = datetime.datetime.now() + datetime.timedelta(seconds=self.connectionTimeout)
                 self.connectionTimeoutJob = self.agent.jobScheduler.add_job(self.start_discovery_procedure, 'date', run_date=execTime)
+                self.setup_connection_to_controller(dlink,uplink)
                 break
 
             time.sleep(2)
@@ -108,7 +108,6 @@ class ControllerMonitor(object):
         msgContainer = [topic, cmdDesc, msg]
 
         self.log.debug("Agent sends context-setup request to controller")
-        time.sleep(1) # TODO: are we waiting for connection?
         self.agent.transport.send_ctr_to_controller(msgContainer)
 
 
